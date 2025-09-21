@@ -185,12 +185,12 @@ namespace NetCoreServer
 
         public string ReceiveText()
         {
-            Buffer result = new Buffer();
+            Buffer result = new();
 
             if (!WebSocket.WsHandshaked)
                 return result.ExtractString(0, result.Data.Length);
 
-            Buffer cache = new Buffer();
+            Buffer cache = new();
 
             // Receive WebSocket frame data
             while (!WebSocket.WsFinalReceived)
@@ -216,12 +216,12 @@ namespace NetCoreServer
 
         public Buffer ReceiveBinary()
         {
-            Buffer result = new Buffer();
+            Buffer result = new();
 
             if (!WebSocket.WsHandshaked)
                 return result;
 
-            Buffer cache = new Buffer();
+            Buffer cache = new();
 
             // Receive WebSocket frame data
             while (!WebSocket.WsFinalReceived)
@@ -322,7 +322,7 @@ namespace NetCoreServer
             // Check for WebSocket handshaked status
             if (WebSocket.WsHandshaked)
             {
-                OnError(new SocketError());
+                OnError(null, new SocketError());
                 return;
             }
 
@@ -343,8 +343,8 @@ namespace NetCoreServer
         public virtual void OnWsClose(byte[] buffer, long offset, long size, int status = 1000) { Close(); }
         public virtual void OnWsPing(byte[] buffer, long offset, long size) { SendPongAsync(buffer, offset, size); }
         public virtual void OnWsPong(byte[] buffer, long offset, long size) {}
-        public virtual void OnWsError(string error) { OnError(SocketError.SocketError); }
-        public virtual void OnWsError(SocketError error) { OnError(error); }
+        public virtual void OnWsError(string error) { OnError(null, SocketError.SocketError); }
+        public virtual void OnWsError(SocketError error) { OnError(null, error); }
 
         public void SendUpgrade(HttpResponse response) { SendResponseAsync(response); }
 

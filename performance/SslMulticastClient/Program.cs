@@ -18,7 +18,7 @@ namespace SslMulticastClient
             Program.TotalBytes += size;
         }
 
-        protected override void OnError(SocketError error)
+        protected override void OnError(Exception ex, SocketError error)
         {
             Console.WriteLine($"Client caught an error with code {error}");
             Program.TotalErrors++;
@@ -84,7 +84,7 @@ namespace SslMulticastClient
             MessageToSend = new byte[size];
 
             // Create and prepare a new SSL client context
-            var context = new SslContext(SslProtocols.Tls13, new X509Certificate2("client.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
+            var context = new SslContext(SslProtocols.Tls12 | SslProtocols.Tls13, new X509Certificate2("client.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
 
             // Create multicast clients
             var multicastClients = new List<MulticastClient>();

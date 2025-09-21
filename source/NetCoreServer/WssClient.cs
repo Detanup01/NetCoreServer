@@ -376,7 +376,7 @@ namespace NetCoreServer
             // Check for WebSocket handshaked status
             if (WebSocket.WsHandshaked)
             {
-                OnError(new SocketError());
+                OnError(null, new SocketError());
                 return;
             }
 
@@ -397,8 +397,8 @@ namespace NetCoreServer
         public virtual void OnWsClose(byte[] buffer, long offset, long size, int status = 1000) { CloseAsync(); }
         public virtual void OnWsPing(byte[] buffer, long offset, long size) { SendPongAsync(buffer, offset, size); }
         public virtual void OnWsPong(byte[] buffer, long offset, long size) {}
-        public virtual void OnWsError(string error) { OnError(SocketError.SocketError); }
-        public virtual void OnWsError(SocketError error) { OnError(error); }
+        public virtual void OnWsError(string error) { OnError(null, SocketError.SocketError); }
+        public virtual void OnWsError(SocketError error) { OnError(null, error); }
 
         #endregion
 

@@ -18,7 +18,7 @@ namespace WssEchoServer
             SendBinaryAsync(buffer, offset, size);
         }
 
-        protected override void OnError(SocketError error)
+        protected override void OnError(Exception ex, SocketError error)
         {
             Console.WriteLine($"Session caught an error with code {error}");
         }
@@ -73,7 +73,7 @@ namespace WssEchoServer
             Console.WriteLine();
 
             // Create and prepare a new SSL server context
-            var context = new SslContext(SslProtocols.Tls13, new X509Certificate2("server.pfx", "qwerty"));
+            var context = new SslContext(SslProtocols.Tls12 | SslProtocols.Tls13, new X509Certificate2("server.pfx", "qwerty"));
 
             // Create a new echo server
             var server = new EchoServer(context, IPAddress.Any, port);

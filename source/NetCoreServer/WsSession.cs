@@ -185,12 +185,12 @@ namespace NetCoreServer
 
         public string ReceiveText()
         {
-            Buffer result = new Buffer();
+            Buffer result = new();
 
             if (!WebSocket.WsHandshaked)
                 return result.ExtractString(0, result.Data.Length);
 
-            Buffer cache = new Buffer();
+            Buffer cache = new();
 
             // Receive WebSocket frame data
             while (!WebSocket.WsFinalReceived)
@@ -216,12 +216,12 @@ namespace NetCoreServer
 
         public Buffer ReceiveBinary()
         {
-            Buffer result = new Buffer();
+            Buffer result = new();
 
             if (!WebSocket.WsHandshaked)
                 return result;
 
-            Buffer cache = new Buffer();
+            Buffer cache = new();
 
             // Receive WebSocket frame data
             while (!WebSocket.WsFinalReceived)

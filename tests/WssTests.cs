@@ -22,7 +22,7 @@ namespace tests
 
         public static SslContext CreateContext()
         {
-            return new SslContext(SslProtocols.Tls13, new X509Certificate2("client.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
+            return new SslContext(SslProtocols.Tls12 | SslProtocols.Tls13, new X509Certificate2("client.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
         }
 
         public override void OnWsConnecting(HttpRequest request)
@@ -41,7 +41,7 @@ namespace tests
         public override void OnWsDisconnected() { IsWsConnected = false; Disconnected = true; }
         public override void OnWsReceived(byte[] buffer, long offset, long size) { Received += (int)size; }
 
-        protected override void OnError(SocketError error) { Errors = true; }
+        protected override void OnError(Exception ex, SocketError error) { Errors = true; }
     }
 
     class EchoWssSession : WssSession
@@ -56,7 +56,7 @@ namespace tests
         public override void OnWsDisconnected() { Disconnected = true; }
         public override void OnWsReceived(byte[] buffer, long offset, long size) { SendBinaryAsync(buffer, offset, size); }
 
-        protected override void OnError(SocketError error) { Errors = true; }
+        protected override void OnError(Exception ex, SocketError error) { Errors = true; }
     }
 
     class EchoWssServer : WssServer
@@ -72,7 +72,7 @@ namespace tests
 
         public static SslContext CreateContext()
         {
-            return new SslContext(SslProtocols.Tls13, new X509Certificate2("server.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
+            return new SslContext(SslProtocols.Tls12 | SslProtocols.Tls13, new X509Certificate2("server.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
         }
 
         protected override SslSession CreateSession() { return new EchoWssSession(this); }

@@ -21,13 +21,13 @@ namespace tests
 
         public static SslContext CreateContext()
         {
-            return new SslContext(SslProtocols.Tls13, new X509Certificate2("client.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
+            return new SslContext(SslProtocols.Tls12 | SslProtocols.Tls13, new X509Certificate2("client.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
         }
 
         protected override void OnConnected() { Connected = true; }
         protected override void OnHandshaked() { Handshaked = true; }
         protected override void OnDisconnected() { Disconnected = true; }
-        protected override void OnError(SocketError error) { Errors = true; }
+        protected override void OnError(Exception ex, SocketError error) { Errors = true; }
     }
 
     class EchoSslSession : SslSession
@@ -43,7 +43,7 @@ namespace tests
         protected override void OnHandshaked() { Handshaked = true; }
         protected override void OnDisconnected() { Disconnected = true; }
         protected override void OnReceived(byte[] buffer, long offset, long size) { SendAsync(buffer, offset, size); }
-        protected override void OnError(SocketError error) { Errors = true; }
+        protected override void OnError(Exception ex, SocketError error) { Errors = true; }
     }
 
     class EchoSslServer : SslServer
@@ -60,7 +60,7 @@ namespace tests
 
         public static SslContext CreateContext()
         {
-            return new SslContext(SslProtocols.Tls13, new X509Certificate2("server.pfx", "qwerty"));
+            return new SslContext(SslProtocols.Tls12 | SslProtocols.Tls13, new X509Certificate2("server.pfx", "qwerty"));
         }
 
         protected override SslSession CreateSession() { return new EchoSslSession(this); }

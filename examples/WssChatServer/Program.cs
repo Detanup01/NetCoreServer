@@ -39,7 +39,7 @@ namespace WssChatServer
                 Close();
         }
 
-        protected override void OnError(SocketError error)
+        protected override void OnError(Exception ex, SocketError error)
         {
             Console.WriteLine($"Chat WebSocket session caught an error with code {error}");
         }
@@ -77,7 +77,7 @@ namespace WssChatServer
             Console.WriteLine();
 
             // Create and prepare a new SSL server context
-            var context = new SslContext(SslProtocols.Tls13, new X509Certificate2("server.pfx", "qwerty"));
+            var context = new SslContext(SslProtocols.Tls12 | SslProtocols.Tls13, new X509Certificate2("server.pfx", "qwerty"));
 
             // Create a new WebSocket server
             var server = new ChatServer(context, IPAddress.Any, port);

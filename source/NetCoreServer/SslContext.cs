@@ -12,7 +12,7 @@ namespace NetCoreServer
         /// <summary>
         /// Initialize SSL context with default protocols
         /// </summary>
-        public SslContext() : this(SslProtocols.Tls13) {}
+        public SslContext() : this(SslProtocols.Tls12 | SslProtocols.Tls13) {}
         /// <summary>
         /// Initialize SSL context with given protocols
         /// </summary>
@@ -81,11 +81,25 @@ namespace NetCoreServer
         /// SSL certificate validation callback
         /// </summary>
         public RemoteCertificateValidationCallback CertificateValidationCallback { get; set; }
-
+        /// <summary>
+        /// SSL server certificate selection callback
+        /// </summary>
+        public ServerCertificateSelectionCallback CertificateSelectionCallback { get; set; }
+        /// <summary>
+        /// SSL Stream certificate context.
+        /// </summary>
+        /// <remarks>
+        /// Setting this nullify <see cref="CertificateSelectionCallback"/>.
+        /// </remarks>
+        public SslStreamCertificateContext CertificateContext { get; set; }
         /// <summary>
         /// Is the client is asked for a certificate for authentication.
         /// Note that this is only a request - if no certificate is provided, the server still accepts the connection request.
         /// </summary>
         public bool ClientCertificateRequired { get; set; }
+        /// <summary>
+        /// Checking for revocation.
+        /// </summary>
+        public X509RevocationMode RevocationMode { get; set; } = X509RevocationMode.NoCheck;
     }
 }

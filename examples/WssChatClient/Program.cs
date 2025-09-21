@@ -62,7 +62,7 @@ namespace WssChatClient
                 ConnectAsync();
         }
 
-        protected override void OnError(SocketError error)
+        protected override void OnError(Exception ex, SocketError error)
         {
             Console.WriteLine($"Chat WebSocket client caught an error with code {error}");
         }
@@ -90,7 +90,7 @@ namespace WssChatClient
             Console.WriteLine();
 
             // Create and prepare a new SSL client context
-            var context = new SslContext(SslProtocols.Tls13, new X509Certificate2("client.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
+            var context = new SslContext(SslProtocols.Tls12 | SslProtocols.Tls13, new X509Certificate2("client.pfx", "qwerty"), (sender, certificate, chain, sslPolicyErrors) => true);
 
             // Create a new TCP chat client
             var client = new ChatClient(context, address, port);
