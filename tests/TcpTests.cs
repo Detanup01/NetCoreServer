@@ -18,7 +18,7 @@ namespace tests
 
         protected override void OnConnected() { Connected = true; }
         protected override void OnDisconnected() { Disconnected = true; }
-        protected override void OnError(SocketError error) { Errors = true; }
+        protected override void OnError(Exception ex, SocketError error) { Errors = true; }
     }
 
     class EchoTcpSession : TcpSession

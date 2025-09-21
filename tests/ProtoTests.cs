@@ -45,7 +45,7 @@ namespace tests
             Received?.Invoke(buffer, offset, size);
         }
 
-        protected override void OnError(SocketError error) { Errors = true; }
+        protected override void OnError(Exception ex, SocketError error) { Errors = true; }
     }
 
     class ProtoClient : Client, ISenderListener, IReceiverListener, IDisposable

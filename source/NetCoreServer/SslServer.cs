@@ -20,26 +20,26 @@ namespace NetCoreServer
         /// <param name="context">SSL context</param>
         /// <param name="address">IP address</param>
         /// <param name="port">Port number</param>
-        public SslServer(SslContext context, IPAddress address, int port) : this(context, new IPEndPoint(address, port)) {}
+        public SslServer(SslContext context, IPAddress address, int port) : this(context, new IPEndPoint(address, port)) { }
         /// <summary>
         /// Initialize SSL server with a given IP address and port number
         /// </summary>
         /// <param name="context">SSL context</param>
         /// <param name="address">IP address</param>
         /// <param name="port">Port number</param>
-        public SslServer(SslContext context, string address, int port) : this(context, new IPEndPoint(IPAddress.Parse(address), port)) {}
+        public SslServer(SslContext context, string address, int port) : this(context, new IPEndPoint(IPAddress.Parse(address), port)) { }
         /// <summary>
         /// Initialize SSL server with a given DNS endpoint
         /// </summary>
         /// <param name="context">SSL context</param>
         /// <param name="endpoint">DNS endpoint</param>
-        public SslServer(SslContext context, DnsEndPoint endpoint) : this(context, endpoint as EndPoint, endpoint.Host, endpoint.Port) {}
+        public SslServer(SslContext context, DnsEndPoint endpoint) : this(context, endpoint as EndPoint, endpoint.Host, endpoint.Port) { }
         /// <summary>
         /// Initialize SSL server with a given IP endpoint
         /// </summary>
         /// <param name="context">SSL context</param>
         /// <param name="endpoint">IP endpoint</param>
-        public SslServer(SslContext context, IPEndPoint endpoint) : this(context, endpoint as EndPoint, endpoint.Address.ToString(), endpoint.Port) {}
+        public SslServer(SslContext context, IPEndPoint endpoint) : this(context, endpoint as EndPoint, endpoint.Address.ToString(), endpoint.Port) { }
         /// <summary>
         /// Initialize SSL server with a given SSL context, endpoint, address and port
         /// </summary>
@@ -290,7 +290,7 @@ namespace NetCoreServer
                 // Update the acceptor socket disposed flag
                 IsSocketDisposed = true;
             }
-            catch (ObjectDisposedException) {}
+            catch (ObjectDisposedException) { }
 
             // Disconnect all sessions
             DisconnectAll();
@@ -389,7 +389,7 @@ namespace NetCoreServer
         /// <summary>
         /// Server sessions
         /// </summary>
-        protected readonly ConcurrentDictionary<Guid, SslSession> Sessions = new ConcurrentDictionary<Guid, SslSession>();
+        protected readonly ConcurrentDictionary<Guid, SslSession> Sessions = new();
 
         /// <summary>
         /// Disconnect all connected sessions
@@ -499,56 +499,56 @@ namespace NetCoreServer
         /// <summary>
         /// Handle server starting notification
         /// </summary>
-        protected virtual void OnStarting() {}
+        protected virtual void OnStarting() { }
         /// <summary>
         /// Handle server started notification
         /// </summary>
-        protected virtual void OnStarted() {}
+        protected virtual void OnStarted() { }
         /// <summary>
         /// Handle server stopping notification
         /// </summary>
-        protected virtual void OnStopping() {}
+        protected virtual void OnStopping() { }
         /// <summary>
         /// Handle server stopped notification
         /// </summary>
-        protected virtual void OnStopped() {}
+        protected virtual void OnStopped() { }
 
         /// <summary>
         /// Handle session connecting notification
         /// </summary>
         /// <param name="session">Connecting session</param>
-        protected virtual void OnConnecting(SslSession session) {}
+        protected virtual void OnConnecting(SslSession session) { }
         /// <summary>
         /// Handle session connected notification
         /// </summary>
         /// <param name="session">Connected session</param>
-        protected virtual void OnConnected(SslSession session) {}
+        protected virtual void OnConnected(SslSession session) { }
         /// <summary>
         /// Handle session handshaking notification
         /// </summary>
         /// <param name="session">Handshaking session</param>
-        protected virtual void OnHandshaking(SslSession session) {}
+        protected virtual void OnHandshaking(SslSession session) { }
         /// <summary>
         /// Handle session handshaked notification
         /// </summary>
         /// <param name="session">Handshaked session</param>
-        protected virtual void OnHandshaked(SslSession session) {}
+        protected virtual void OnHandshaked(SslSession session) { }
         /// <summary>
         /// Handle session disconnecting notification
         /// </summary>
         /// <param name="session">Disconnecting session</param>
-        protected virtual void OnDisconnecting(SslSession session) {}
+        protected virtual void OnDisconnecting(SslSession session) { }
         /// <summary>
         /// Handle session disconnected notification
         /// </summary>
         /// <param name="session">Disconnected session</param>
-        protected virtual void OnDisconnected(SslSession session) {}
+        protected virtual void OnDisconnected(SslSession session) { }
 
         /// <summary>
         /// Handle error notification
         /// </summary>
         /// <param name="error">Socket error code</param>
-        protected virtual void OnError(SocketError error) {}
+        protected virtual void OnError(SocketError error) { }
 
         internal void OnConnectingInternal(SslSession session) { OnConnecting(session); }
         internal void OnConnectedInternal(SslSession session) { OnConnected(session); }

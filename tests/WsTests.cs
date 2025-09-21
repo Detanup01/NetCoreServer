@@ -34,7 +34,7 @@ namespace tests
         public override void OnWsDisconnected() { IsWsConnected = false; Disconnected = true; }
         public override void OnWsReceived(byte[] buffer, long offset, long size) { Received += (int)size; }
 
-        protected override void OnError(SocketError error) { Errors = true; }
+        protected override void OnError(Exception ex, SocketError error) { Errors = true; }
     }
 
     class EchoWsSession : WsSession
