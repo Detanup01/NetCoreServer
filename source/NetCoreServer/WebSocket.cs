@@ -568,7 +568,7 @@ public class WebSocket : IWebSocket
     /// <summary>
     /// Handshaked flag
     /// </summary>
-    internal bool WsHandshaked;
+    public bool WsHandshaked { get; internal set; }
     /// <summary>
     /// Received frame flag
     /// </summary>
